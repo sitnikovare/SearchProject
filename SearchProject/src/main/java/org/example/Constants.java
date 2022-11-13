@@ -1,8 +1,5 @@
 package org.example;
 
-/**
- * Globally shared constants should be here
- */
 public final class Constants {
 
     private Constants() {

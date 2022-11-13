@@ -17,14 +17,6 @@ public class BasicSearch {
         this.reader = reader;
     }
 
-    /**
-     * Search using TermQuery
-     * @param toSearch string to search
-     * @param searchField field where to search. We have "body" and "title" fields
-     * @param limit how many results to return
-     * @throws IOException
-     * @throws ParseException
-     */
     public void searchIndexWithTermQuery(final String toSearch, final String searchField, final int limit) throws IOException, ParseException {
         final IndexSearcher indexSearcher = new IndexSearcher(reader);
 
@@ -35,25 +27,10 @@ public class BasicSearch {
         showHits(hits);
     }
 
-    /**
-     * This is wrapper to searchIndexWithTermQuery
-     * It executes searchIndexWithTermQuery using "body" field and limiting to 10 results
-     *
-     * @param toSearch string to search in the "body" field
-     * @throws IOException
-     * @throws ParseException
-     */
     public void searchIndexWithTermQueryByBody(final String toSearch) throws IOException, ParseException {
         searchIndexWithTermQuery(toSearch, "body", DEFAULT_LIMIT);
     }
 
-    /**
-     * Search in body using QueryParser
-     * @param toSearch string to search
-     * @param limit how many results to return
-     * @throws IOException
-     * @throws ParseException
-     */
     public void searchInBody(final String toSearch, final int limit) throws IOException, ParseException {
         final IndexSearcher indexSearcher = new IndexSearcher(reader);
 
@@ -78,14 +55,6 @@ public class BasicSearch {
         showHits(hits);
     }
 
-    /**
-     * This is wrapper to searchInBody function
-     * it executes searchInBody with default limiting to 10 results
-     *
-     * @param toSearch
-     * @throws IOException
-     * @throws ParseException
-     */
     public void searchInBody(final String toSearch) throws IOException, ParseException {
         searchInBody(toSearch, DEFAULT_LIMIT);
     }
@@ -94,14 +63,6 @@ public class BasicSearch {
         searchInTitle(toSearch, DEFAULT_LIMIT);
     }
 
-    /**
-     * Search using FuzzyQuery.
-     * @param toSearch string to search
-     * @param searchField field where to search. We have "body" and "title" fields
-     * @param limit how many results to return
-     * @throws IOException
-     * @throws ParseException
-     */
     public void fuzzySearch(final String toSearch, final String searchField, final int limit) throws IOException, ParseException {
         final IndexSearcher indexSearcher = new IndexSearcher(reader);
 
@@ -114,14 +75,6 @@ public class BasicSearch {
         showHits(hits);
     }
 
-    /**
-     * Wrapper to fuzzySearch function.
-     * It executed fuzzySearch with default limit and body field as target field
-     *
-     * @param toSearch string to search
-     * @throws IOException
-     * @throws ParseException
-     */
     public void fuzzySearch(final String toSearch) throws IOException, ParseException {
         fuzzySearch(toSearch, "body", DEFAULT_LIMIT);
     }

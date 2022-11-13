@@ -2,8 +2,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>kz.kaznu.lucene</groupId>
-    <artifactId>tutorial</artifactId>
+    <groupId>sitnikovare</groupId>
+    <artifactId>search</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -19,9 +19,6 @@
     </build>
     <packaging>jar</packaging>
 
-    <name>tutorial</name>
-    <url>http://kaznu.kz/</url>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lucene.version>5.4.1</lucene.version>
@@ -35,7 +32,6 @@
             <scope>test</scope>
         </dependency>
 
-        <!--Lucene libs start-->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
@@ -52,16 +48,12 @@
             <version>${lucene.version}</version>
         </dependency>
 
-        <!--Lucene libs end-->
-
-        <!--For basic IO operations-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
 
-        <!--Gson to read data from tutorial.json file-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
