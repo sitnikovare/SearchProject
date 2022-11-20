@@ -1,6 +1,9 @@
 package org.example;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.custom.CustomAnalyzer;
 import org.apache.lucene.analysis.ru.RussianAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
@@ -57,6 +60,11 @@ public class MessageIndexer {
         final Analyzer analyzer = new RussianAnalyzer();
         index(create, documents, analyzer);
     }
+
+//    public void improvedRussinIndex(final Boolean create, List<Document> documents) throws IOException {
+//        final Analyzer analyzerRus = new RussianAnalyzer();
+//        index(create, documents, analyzer);
+//    }
 
     /**
      * Создание одного документа

@@ -29,7 +29,7 @@ public class IndexCreator {
     }
 
     /**
-     * Строит индекс для одного документа
+     * Строит один lucene-документ
      * @return lucene-документ для соответствуюещго файла
      */
     public Document createIndexForOneDocument(File currentFile) {
