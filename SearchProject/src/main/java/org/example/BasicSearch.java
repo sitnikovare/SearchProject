@@ -74,6 +74,7 @@ public class BasicSearch {
         final Query query = new FuzzyQuery(term, maxEdits);
         final TopDocs search = indexSearcher.search(query, limit);
         final ScoreDoc[] hits = search.scoreDocs;
+        System.out.println("Search: " + toSearch + " Field: " + searchField + " MaxScore: " + search.getMaxScore());
         HashSet<String> resT = new HashSet<>();
         resT = returnHits(hits);
         return resT;
@@ -102,8 +103,8 @@ public class BasicSearch {
 
     private HashSet<String> returnHits(final ScoreDoc[] hits) throws IOException {
         if (hits.length == 0) {
-            System.out.println("\n\tНичего не найдено");
-            return null;
+//            System.out.println("\n\tНичего не найдено");
+            return new HashSet<>();
         }
 
         HashSet<String> resTitles = new HashSet<>();
