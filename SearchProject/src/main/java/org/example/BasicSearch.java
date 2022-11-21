@@ -69,7 +69,6 @@ public class BasicSearch {
         final IndexSearcher indexSearcher = new IndexSearcher(reader);
 
         final Term term = new Term(searchField, toSearch);
-        System.out.println("\tТерм:" + term.text());
 
         final int maxEdits = 2;
         final Query query = new FuzzyQuery(term, maxEdits);
