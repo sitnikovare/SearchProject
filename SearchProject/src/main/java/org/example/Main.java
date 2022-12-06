@@ -42,7 +42,8 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        IndexCreator ic = new IndexCreator();
+//        Построение индексов
+//        IndexCreator ic = new IndexCreator();
         IndexReader ir;
         MessageIndexer midx = new MessageIndexer("D:\\CSIT\\SearchProject\\SearchProject\\indexesForDocs");
 
@@ -54,20 +55,36 @@ public class Main {
             String[] termsQuery = termQuery(query);
             System.out.println("\t\tРезультаты поиска по запросу: " + query + "\n");
 
-            ArrayList<HashSet<String>> resultSets = new ArrayList<>();
+            ArrayList<ArrayList<String>> resultSets = new ArrayList<>();
             // производим поиск по каждому терму и запоминаем в сет
             for (String term : termsQuery) {
-                HashSet<String> resTitle = new HashSet<>();
+                ArrayList<String> resTitle = new ArrayList<>();
                 resTitle = bsearch.fuzzySearch(term, "title", 5);
-                HashSet<String> resBody = new HashSet<>();
+                ArrayList<String> resDoctor = new ArrayList<>();
+                resDoctor = bsearch.fuzzySearch(term, "doctor", 5);
+                ArrayList<String> resComp = new ArrayList<>();
+                resComp = bsearch.fuzzySearch(term, "companion", 5);
+                ArrayList<String> resEnemy = new ArrayList<>();
+                resEnemy = bsearch.fuzzySearch(term, "enemy", 5);
+                ArrayList<String> resBody = new ArrayList<>();
                 resBody = bsearch.fuzzySearch(term, "body", 5);
+
                 // объединяем сеты
-                HashSet<String> resultSet = new HashSet<>();
+                ArrayList<String> resultSet = new ArrayList<>();
                 if (!resTitle.isEmpty()) {
                     resultSet.addAll(resTitle);
                 }
                 if (!resBody.isEmpty()) {
                     resultSet.addAll(resBody);
+                }
+                if (!resBody.isEmpty()) {
+                    resultSet.addAll(resDoctor);
+                }
+                if (!resBody.isEmpty()) {
+                    resultSet.addAll(resComp);
+                }
+                if (!resBody.isEmpty()) {
+                    resultSet.addAll(resEnemy);
                 }
 //                resultSet.addAll(fullQuery);
                 // запоминаем сет

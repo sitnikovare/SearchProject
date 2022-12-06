@@ -8,6 +8,7 @@ import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -65,7 +66,7 @@ public class BasicSearch {
         searchInTitle(toSearch, DEFAULT_LIMIT);
     }
 
-    public HashSet<String> fuzzySearch(final String toSearch, final String searchField, final int limit) throws IOException, ParseException {
+    public ArrayList<String> fuzzySearch(final String toSearch, final String searchField, final int limit) throws IOException, ParseException {
         final IndexSearcher indexSearcher = new IndexSearcher(reader);
 
         final Term term = new Term(searchField, toSearch);
@@ -75,7 +76,7 @@ public class BasicSearch {
         final TopDocs search = indexSearcher.search(query, limit);
         final ScoreDoc[] hits = search.scoreDocs;
         System.out.println("Search: " + toSearch + " Field: " + searchField + " MaxScore: " + search.getMaxScore());
-        HashSet<String> resT = new HashSet<>();
+        ArrayList<String> resT = new ArrayList<>();
         resT = returnHits(hits);
         return resT;
 //        showHits(hits);
@@ -86,6 +87,12 @@ public class BasicSearch {
         fuzzySearch(toSearch, "body", DEFAULT_LIMIT);
         System.out.println("\nПо названию:");
         fuzzySearch(toSearch, "title", DEFAULT_LIMIT);
+        System.out.println("\nПо Доктору:");
+        fuzzySearch(toSearch, "doctor", DEFAULT_LIMIT);
+        System.out.println("\nПо спутнику:");
+        fuzzySearch(toSearch, "companion", DEFAULT_LIMIT);
+        System.out.println("\nПо врагам:");
+        fuzzySearch(toSearch, "enemy", DEFAULT_LIMIT);
     }
 
     private void showHits(final ScoreDoc[] hits) throws IOException {
@@ -101,13 +108,13 @@ public class BasicSearch {
         }
     }
 
-    private HashSet<String> returnHits(final ScoreDoc[] hits) throws IOException {
+    private ArrayList<String> returnHits(final ScoreDoc[] hits) throws IOException {
         if (hits.length == 0) {
 //            System.out.println("\n\tНичего не найдено");
-            return new HashSet<>();
+            return new ArrayList<>();
         }
 
-        HashSet<String> resTitles = new HashSet<>();
+        ArrayList<String> resTitles = new ArrayList<>();
 //        System.out.println("\n\tРезультаты поиска:");
         for (ScoreDoc hit : hits) {
             final String title = reader.document(hit.doc).get("title");

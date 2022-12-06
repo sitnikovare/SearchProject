@@ -6,6 +6,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Создает индексы для спаршенных документов
@@ -28,14 +29,50 @@ public class IndexCreator {
         return files;
     }
 
+
+    ArrayList<String[]> filedsForFiles = new ArrayList<>();
+
+    public void getCSV() {
+        ArrayList<String[]> csvList = new ArrayList<>();
+        // получить дополнительные поля файла
+        File csvFile = new File(getClass().getClassLoader().getResource("res.csv").getFile());
+        try(BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
+            String line = "";
+            String cvsSplitBy = ",";
+            Scanner scanner;
+            int index = 0;
+            while ((line = br.readLine()) != null) {
+                scanner = new Scanner(line);
+                scanner.useDelimiter(",");
+                String[] fields = {"0", "1", "2", "3"};
+                while (scanner.hasNext()) {
+                    String data = scanner.next();
+                    if (index == 4) {break;}
+                    fields[index] = data;
+                    index++;
+                }
+                index = 0;
+                csvList.add(fields);
+//                System.out.println("Filename= " + fields[0]
+//                        + " , Doctor= " + fields[1]
+//                        + " , Companions= " + fields[2]
+//                        + " , Enemies= " + fields[3]);
+            }
+        }
+        catch(IOException ex){
+            System.out.println(ex.getMessage());
+        }
+        this.filedsForFiles = csvList;
+    }
+
     /**
      * Строит один lucene-документ
      * @return lucene-документ для соответствуюещго файла
      */
     public Document createIndexForOneDocument(File currentFile) {
         // хранит название файла
-        String fileTitle = currentFile.getName();
-        fileTitle = fileTitle.substring(0, fileTitle.indexOf("."));
+        String filename = currentFile.getName();
+        String fileTitle = filename.substring(0, filename.indexOf("."));
 
         // хранит тело файла
         String fileBody = "";
@@ -53,12 +90,12 @@ public class IndexCreator {
             }
         }
         catch(IOException ex){
-
             System.out.println(ex.getMessage());
         }
 
+
         // строим lucene-документ для данного файла
-        Document doc = MessageToDocument.createWith(fileTitle, fileBody);
+        Document doc = MessageToDocument.createWith(filename, fileTitle, fileBody, filedsForFiles);
 
         return doc;
     }
@@ -78,6 +115,7 @@ public class IndexCreator {
     public IndexCreator() {
         // получаем список всех файлов
         files = getFilesList();
+        getCSV();
         // создаем Lucene документы для всех файлов
         creatingLuceneDocuments();
         // строим индексы для документов
