@@ -5,6 +5,8 @@ import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.queryparser.flexible.core.QueryNodeException;
+import org.apache.lucene.queryparser.flexible.standard.StandardQueryParser;
 import org.apache.lucene.search.*;
 
 import java.io.IOException;
@@ -123,5 +125,17 @@ public class BasicSearch {
 //            System.out.println("\n\tID = " + hit.doc + "\n\tНазвание = " + title + "\n\tСодержание = " + body);
         }
         return  resTitles;
+    }
+
+    public ArrayList<String> searchWithParsing (final String query, final int limit) throws QueryNodeException, IOException {
+        StandardQueryParser queryParserHelper = new StandardQueryParser(new RussianAnalyzer());
+        // парсинг запроса, дефолтное поле - body
+        IndexSearcher indexSearcher = new IndexSearcher(reader);
+        Query queryAfterParse = queryParserHelper.parse(query, "body");
+        final TopDocs search = indexSearcher.search(queryAfterParse, limit);
+        final ScoreDoc[] hits = search.scoreDocs;
+        ArrayList<String> resT = new ArrayList<>();
+        resT = returnHits(hits);
+        return resT;
     }
 }
