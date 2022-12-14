@@ -57,8 +57,11 @@ public class Main {
             ir = midx.readIndex();
             // получаем изначальный запрос (в формате поиска по полям)
             String query = getQuery();
+            QueryModifier qm = new QueryModifier(query);
+            String newQuery = qm.getAfterQuery();
+            System.out.println("\nПроизводится поиск по запросу: " + newQuery);
             BasicSearch bsearch = new BasicSearch(ir);
-            ArrayList<String> results = bsearch.searchWithParsing(query, 10);
+            ArrayList<String> results = bsearch.searchWithParsing(newQuery, 10);
             printResults(results);
             //********************************************************************************************************//
             //***************** старый вариант парсинга запросов ******************//
